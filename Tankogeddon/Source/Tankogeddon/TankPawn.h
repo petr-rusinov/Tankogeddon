@@ -8,7 +8,8 @@
 #include "Camera/CameraComponent.h"
 #include "TankPawn.generated.h"
 
-//Прекрасно компилируется без этих строк
+//Compiles and works fine without it 
+// 
 //class UStaticMeshComponent;
 //class UCameraComponent;
 //class USpringArmComponent;
