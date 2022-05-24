@@ -5,6 +5,9 @@
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
+
+DECLARE_LOG_CATEGORY_EXTERN(TankLog, All, All);
+DEFINE_LOG_CATEGORY(TankLog);
 // Sets default values
 ATankPawn::ATankPawn()
 {
@@ -25,7 +28,7 @@ ATankPawn::ATankPawn()
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(SpringArm);
-
+	CurrentRightAxisValue = GetActorRotation().Yaw;
 }
 
 void ATankPawn::MoveForward(float AxisValue)
@@ -53,13 +56,16 @@ void ATankPawn::Tick(float DeltaTime)
 	FVector currentLocation = GetActorLocation();
 	FVector forwardVector = GetActorForwardVector();
 	FVector movePosition = currentLocation + forwardVector * MoveSpeed * _targetForwardAxisValue * DeltaTime;
-	//SetActorLocation(movePosition, true);
 
 	//Rotation
 	FRotator currentRotation = GetActorRotation();
-	currentRotation.Yaw += _targetRotateValue * RotationSpeed;
-	
+
+	CurrentRightAxisValue = FMath::Lerp(CurrentRightAxisValue, _targetRotateValue, InterpolationKey);
+	currentRotation.Yaw += CurrentRightAxisValue * DeltaTime * RotationSpeed;
 	SetActorLocationAndRotation(movePosition, FQuat(currentRotation));
+
+	//UE_LOG(LogTemp, Warning, TEXT("CurrentRightAxisValue = %f, _targetRotateValue = %f"),
+	//	CurrentRightAxisValue, _targetRotateValue);
 
 }
 

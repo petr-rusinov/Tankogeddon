@@ -44,9 +44,12 @@ protected:
 	float MoveSpeed = 100;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Movement|Speed")
 	float RotationSpeed = 100;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Movement|Speed")
+	float InterpolationKey = 0.1f;
 
 	float _targetForwardAxisValue;
 	float _targetRotateValue;
+	float CurrentRightAxisValue;
 
 
 public:	
