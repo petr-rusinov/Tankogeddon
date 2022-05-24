@@ -13,6 +13,7 @@
 //class UStaticMeshComponent;
 //class UCameraComponent;
 //class USpringArmComponent;
+class ATankPlayerController;
 
 UCLASS()
 class TANKOGEDDON_API ATankPawn : public APawn
@@ -46,6 +47,11 @@ protected:
 	float RotationSpeed = 100;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Movement|Speed")
 	float InterpolationKey = 0.1f;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Turret|Speed")
+	float TurretRotationInterpolationKey = 0.5f;
+
+	UPROPERTY()
+	ATankPlayerController* TankController;
 
 	float _targetForwardAxisValue;
 	float _targetRotateValue;

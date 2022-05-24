@@ -4,10 +4,13 @@
 #include "TankPawn.h"
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "TankPlayerController.h"
 #include "Camera/CameraComponent.h"
+#include "Kismet/KismetMathLibrary.h"
 
 DECLARE_LOG_CATEGORY_EXTERN(TankLog, All, All);
 DEFINE_LOG_CATEGORY(TankLog);
+
 // Sets default values
 ATankPawn::ATankPawn()
 {
@@ -45,6 +48,7 @@ void ATankPawn::Rotate(float value)
 void ATankPawn::BeginPlay()
 {
 	Super::BeginPlay();
+	TankController = Cast<ATankPlayerController>(GetController());
 	
 }
 
@@ -67,6 +71,16 @@ void ATankPawn::Tick(float DeltaTime)
 	//UE_LOG(LogTemp, Warning, TEXT("CurrentRightAxisValue = %f, _targetRotateValue = %f"),
 	//	CurrentRightAxisValue, _targetRotateValue);
 
+	//Turret Rotation
+	if (TankController)
+	{
+		FVector mousePos = TankController->GetMousePos();
+		FRotator targetRotation = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), mousePos);
+		FRotator currRotation = TurretMesh->GetComponentRotation();
+		targetRotation.Roll = currRotation.Roll;
+		targetRotation.Pitch = currRotation.Pitch;
+		TurretMesh->SetWorldRotation(FMath::Lerp(currRotation, targetRotation, TurretRotationInterpolationKey));
+	}
 }
 
 // Called to bind functionality to input
