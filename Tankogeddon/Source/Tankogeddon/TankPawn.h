@@ -6,6 +6,7 @@
 #include "GameFramework/Pawn.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
+#include "Cannon.h"
 #include "TankPawn.generated.h"
 
 //Compiles and works fine without it 
@@ -41,6 +42,8 @@ protected:
 	USpringArmComponent* SpringArm;
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Components")
 	UCameraComponent* Camera;
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Components")
+	UArrowComponent* CannonSetupPoint;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Movement|Speed")
 	float MoveSpeed = 100;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Movement|Speed")
@@ -49,6 +52,10 @@ protected:
 	float InterpolationKey = 0.1f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Turret|Speed")
 	float TurretRotationInterpolationKey = 0.5f;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Turret|Speed")
+	TSubclassOf<ACannon> CannonClass;
+	UPROPERTY()
+	ACannon* Cannon;
 
 	UPROPERTY()
 	ATankPlayerController* TankController;
@@ -56,7 +63,7 @@ protected:
 	float _targetForwardAxisValue;
 	float _targetRotateValue;
 	float CurrentRightAxisValue;
-
+	void SetupCannon();
 
 public:	
 	// Called every frame
@@ -64,5 +71,9 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	UFUNCTION()
+	void Fire();
+	UFUNCTION()
+	void FireSpecial();
 
 };
