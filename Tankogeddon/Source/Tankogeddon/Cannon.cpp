@@ -47,6 +47,9 @@ void ACannon::Fire()
 
 void ACannon::FireSpecial()
 {
+	if (!ReadyToFire)
+		return;
+	ReadyToFire = false;
 	if (CurrentBulletsNum == 0)
 	{
 		GEngine->AddOnScreenDebugMessage(10, 1, FColor::Red, "No Bullets Left!");
