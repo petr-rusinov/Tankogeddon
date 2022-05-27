@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameStructs.h"
 #include "GameFramework/Actor.h"
+#include <Tankogeddon/Projectile.h>
+
 #include "Cannon.generated.h"
 
 
@@ -42,6 +44,9 @@ protected:
 	int FireSeriesProjectileNumber = 3;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Fire params")
 	int FireTotalBullets = 10;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Fire params")
+	TSubclassOf<AProjectile> ProjectileClass;
+
 
 	FTimerHandle ReloadTimerHandle;
 	FTimerHandle SeriesTimerHandle;
@@ -55,5 +60,6 @@ protected:
 	void Reload();
 	void NextProjectle();
 	virtual void Tick(float DeltaTime) override;
+	void SpawnProjectile();
 
 };

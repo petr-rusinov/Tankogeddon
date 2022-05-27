@@ -36,6 +36,7 @@ void ACannon::Fire()
 	if (Type == ECannonType::FireProjectile)
 	{
 		GEngine->AddOnScreenDebugMessage(10, 1, FColor::Green, "Fire - Projectile");
+		SpawnProjectile();
 	}
 	else
 	{
@@ -76,6 +77,7 @@ void ACannon::BeginPlay()
 void ACannon::Reload()
 {
 	GEngine->AddOnScreenDebugMessage(10, 1, FColor::Green, "Fire - Reload");
+
 	if (projectilesInSeries == 0)
 		projectilesInSeries = FireSeriesProjectileNumber;
 	ReadyToFire = true;
@@ -101,6 +103,7 @@ void ACannon::Tick(float DeltaTime)
 		if (Type == ECannonType::FireProjectile)
 		{
 			GEngine->AddOnScreenDebugMessage(projectilesInSeries, 1, FColor::Red, "FireSpecial - Projectile");
+			SpawnProjectile();
 		}
 		else
 		{
@@ -113,6 +116,15 @@ void ACannon::Tick(float DeltaTime)
 		ReadyToSeries = false;
 		GetWorld()->GetTimerManager().SetTimer(ReloadTimerHandle, this, &ACannon::Reload, 1 / FireRate, false);
 	}
+
+}
+
+void ACannon::SpawnProjectile()
+{
+	AProjectile* projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass,
+		ProjectileSpawnPoint->GetComponentLocation(), ProjectileSpawnPoint->GetComponentRotation());
+	if (projectile)
+		projectile->Start();
 
 }
 
