@@ -6,6 +6,7 @@
 #include "TimerManager.h"
 #include "Components/ArrowComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "DrawDebugHelpers.h"
 
 
 // Sets default values
@@ -41,6 +42,25 @@ void ACannon::Fire()
 	else
 	{
 		GEngine->AddOnScreenDebugMessage(10, 1, FColor::Green, "Fire - Trace");
+		FHitResult hitResult;
+		FCollisionQueryParams traceParams = FCollisionQueryParams(TEXT("FireTrace"), true, this);
+		traceParams.bTraceComplex = true;
+		traceParams.bReturnPhysicalMaterial = false;
+
+		FVector start = ProjectileSpawnPoint->GetComponentLocation();
+		FVector end = ProjectileSpawnPoint->GetForwardVector() * FireRange + start;
+		if (GetWorld()->LineTraceSingleByChannel(hitResult, start, end, ECollisionChannel::ECC_Visibility, traceParams))
+		{
+			DrawDebugLine(GetWorld(), start, hitResult.Location, FColor::Red, false, 0.5f, 0, 5);
+			if (hitResult.Actor.Get())
+			{
+				hitResult.Actor.Get()->Destroy();
+			}
+		}
+		else
+		{
+			DrawDebugLine(GetWorld(), start, end, FColor::Red, false, 0.5f, 0, 5);
+		}
 	}
 
 	GetWorld()->GetTimerManager().SetTimer(ReloadTimerHandle, this, &ACannon::Reload, 1 / FireRate, false);
