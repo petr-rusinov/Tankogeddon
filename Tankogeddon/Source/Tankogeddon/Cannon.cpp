@@ -141,10 +141,8 @@ void ACannon::Tick(float DeltaTime)
 
 void ACannon::SpawnProjectile()
 {
-	FActorSpawnParameters Params;
-	Params.Owner = this;
 	AProjectile* projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass,
-		ProjectileSpawnPoint->GetComponentLocation(), ProjectileSpawnPoint->GetComponentRotation(), Params);
+		ProjectileSpawnPoint->GetComponentLocation(), ProjectileSpawnPoint->GetComponentRotation());
 	if (projectile)
 		projectile->Start();
 
