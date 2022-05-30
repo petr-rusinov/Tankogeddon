@@ -54,12 +54,16 @@ void ATankPawn::BeginPlay()
 {
 	Super::BeginPlay();
 	TankController = Cast<ATankPlayerController>(GetController());
-	SetupCannon();
+	SetupCannon(CannonClass);
 	
 }
 
-void ATankPawn::SetupCannon()
+void ATankPawn::SetupCannon(TSubclassOf<ACannon> cannonClass)
 {
+	if (cannonClass)
+	{
+		CannonClass = cannonClass;
+	}
 	if (Cannon)
 	{
 		Cannon->Destroy();

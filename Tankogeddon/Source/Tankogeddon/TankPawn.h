@@ -63,7 +63,7 @@ protected:
 	float _targetForwardAxisValue;
 	float _targetRotateValue;
 	float CurrentRightAxisValue;
-	void SetupCannon();
+
 
 public:	
 	// Called every frame
@@ -75,5 +75,6 @@ public:
 	void Fire();
 	UFUNCTION()
 	void FireSpecial();
+	void SetupCannon(TSubclassOf<ACannon> cannonClass);
 
 };
