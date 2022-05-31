@@ -37,6 +37,7 @@ ATankPawn::ATankPawn()
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(SpringArm);
 	CurrentRightAxisValue = GetActorRotation().Yaw;
+	
 }
 
 void ATankPawn::MoveForward(float AxisValue)
@@ -54,6 +55,7 @@ void ATankPawn::BeginPlay()
 {
 	Super::BeginPlay();
 	TankController = Cast<ATankPlayerController>(GetController());
+	CannonClass = CannonClass1;
 	SetupCannon(CannonClass);
 	
 }
@@ -130,3 +132,20 @@ void ATankPawn::FireSpecial()
 	}
 }
 
+void ATankPawn::ChangeCannon()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Cannon changed, %s"), *Cannon->GetClass()->GetName());
+
+	if (CurrentCannon == 1)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Cannon changed to Cannon2 "), Cannon->GetClass());
+		SetupCannon(CannonClass2);
+		CurrentCannon = 2;
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Cannon changed to Cannon "), Cannon->GetClass());
+		SetupCannon(CannonClass1);
+		CurrentCannon = 1;
+	}
+}

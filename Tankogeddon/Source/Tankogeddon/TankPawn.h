@@ -53,7 +53,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Turret|Speed")
 	float TurretRotationInterpolationKey = 0.5f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Turret|Speed")
-	TSubclassOf<ACannon> CannonClass;
+	TSubclassOf<ACannon> CannonClass1;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Turret|Speed")
+	TSubclassOf<ACannon> CannonClass2;
 	UPROPERTY()
 	ACannon* Cannon;
 
@@ -63,6 +65,8 @@ protected:
 	float _targetForwardAxisValue;
 	float _targetRotateValue;
 	float CurrentRightAxisValue;
+
+	int CurrentCannon = 1;
 
 
 public:	
@@ -76,5 +80,7 @@ public:
 	UFUNCTION()
 	void FireSpecial();
 	void SetupCannon(TSubclassOf<ACannon> cannonClass);
+	void ChangeCannon();
+	TSubclassOf<ACannon> CannonClass;
 
 };

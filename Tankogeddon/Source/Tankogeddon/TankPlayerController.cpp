@@ -16,6 +16,8 @@ void ATankPlayerController::SetupInputComponent()
 	InputComponent->BindAxis("Rotate", this, &ATankPlayerController::Rotate);
 	InputComponent->BindAction("Fire", IE_Pressed, this, &ATankPlayerController::Fire);
 	InputComponent->BindAction("FireSpecial", IE_Pressed, this, &ATankPlayerController::FireSpecial);
+	InputComponent->BindAction("ChangeCannon", IE_Pressed, this, &ATankPlayerController::ChangeCannon);
+
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
@@ -57,3 +59,13 @@ void ATankPlayerController::FireSpecial()
 {
 	TankPawn->FireSpecial();
 }
+
+void ATankPlayerController::ChangeCannon()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Cannon changed"));
+	TankPawn->ChangeCannon();
+
+}
+
+
+

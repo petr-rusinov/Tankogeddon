@@ -32,5 +32,6 @@ protected:
 	void Rotate(float value);
 	void Fire();
 	void FireSpecial();
+	void ChangeCannon();
 
 };
