@@ -28,7 +28,7 @@ void ACannon::Fire()
 	ReadyToFire = false;
 	if (CurrentBulletsNum == 0)
 	{
-		GEngine->AddOnScreenDebugMessage(10, 1, FColor::Red, "No Bullets Left!");
+		GEngine->AddOnScreenDebugMessage(10, 1, FColor::Red, "No Bullets!");
 		return;
 	}
 	else
@@ -85,6 +85,14 @@ void ACannon::FireSpecial()
 bool ACannon::IsReadyToFire()
 {
 	return ReadyToFire;
+}
+
+void ACannon::AddBullets(int Num)
+{
+	FireTotalBullets += Num;
+	CurrentBulletsNum += Num;
+	UE_LOG(LogTemp, Warning, TEXT("Bullets total: %d of %d"), CurrentBulletsNum, FireTotalBullets);
+
 }
 
 // Called when the game starts or when spawned

@@ -82,5 +82,6 @@ public:
 	void SetupCannon(TSubclassOf<ACannon> cannonClass);
 	void ChangeCannon();
 	TSubclassOf<ACannon> CannonClass;
+	ACannon* GetCannon() { return Cannon; }
 
 };

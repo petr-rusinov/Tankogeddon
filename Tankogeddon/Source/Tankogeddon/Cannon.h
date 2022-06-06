@@ -23,6 +23,7 @@ public:
 	void Fire();
 	void FireSpecial();
 	bool IsReadyToFire();
+	void AddBullets(int Num);
 
 protected:
 	UPROPERTY (VisibleDefaultsOnly, BlueprintReadWrite, Category = "Components")
