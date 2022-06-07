@@ -65,6 +65,10 @@ void ATankPawn::SetupCannon(TSubclassOf<ACannon> cannonClass)
 	if (cannonClass)
 	{
 		CannonClass = cannonClass;
+		if (CurrentCannon == 1)
+			CannonClass1 = cannonClass;
+		else if (CurrentCannon == 2)
+			CannonClass2 = cannonClass;
 	}
 	if (Cannon)
 	{
@@ -138,14 +142,14 @@ void ATankPawn::ChangeCannon()
 
 	if (CurrentCannon == 1)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Cannon changed to Cannon2 "), Cannon->GetClass());
-		SetupCannon(CannonClass2);
+		UE_LOG(LogTemp, Warning, TEXT("Cannon changed to Cannon2 %s "), *Cannon->GetName());
 		CurrentCannon = 2;
+		SetupCannon(CannonClass2);
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Cannon changed to Cannon "), Cannon->GetClass());
-		SetupCannon(CannonClass1);
+		UE_LOG(LogTemp, Warning, TEXT("Cannon changed to Cannon %s"), *Cannon->GetName());
 		CurrentCannon = 1;
+		SetupCannon(CannonClass1);
 	}
 }
